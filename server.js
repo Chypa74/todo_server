@@ -39,6 +39,8 @@ app.log.on('preadd', (action, meta) => {
 
   if (action.type === 'COMPLETE_ALL_TODOS')
     meta.reasons.push('completeAllTodos');
+
+  if (action.type === 'CLEAR_COMPLETED') meta.reasons.push('clearCompleted');
 });
 
 app.type('ADD_TODO', {
@@ -153,6 +155,23 @@ app.type('COMPLETE_ALL_TODOS', {
               return console.log(err);
             }
           });
+      });
+  }
+});
+
+app.type('CLEAR_COMPLETED', {
+  access(action, meta, creator) {
+    console.log(action);
+    return true;
+  },
+  process(action) {
+    db.get()
+      .collection('todos')
+      .deleteMany({ completed: true }, function(err, result) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log(result.ops);
       });
   }
 });
