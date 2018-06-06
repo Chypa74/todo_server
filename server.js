@@ -22,7 +22,6 @@ db.connect(
 );
 
 app.auth((userId, token) => {
-  // console.log(app.log);
   return Promise.resolve(true);
 });
 
@@ -45,7 +44,6 @@ app.log.on('preadd', (action, meta) => {
 
 app.type('ADD_TODO', {
   access(action, meta, creator) {
-    console.log(action);
     return true;
   },
   process(action) {
@@ -61,14 +59,12 @@ app.type('ADD_TODO', {
         if (err) {
           return console.log(err);
         }
-        console.log(result.ops);
       });
   }
 });
 
 app.type('EDIT_TODO_TITLE', {
   access(action, meta, creator) {
-    console.log(action);
     return true;
   },
   process(action) {
@@ -80,7 +76,6 @@ app.type('EDIT_TODO_TITLE', {
 
 app.type('EDIT_TODO_TEXT', {
   access(action, meta, creator) {
-    console.log(action);
     return true;
   },
   process(action) {
@@ -92,7 +87,6 @@ app.type('EDIT_TODO_TEXT', {
 
 app.type('DELETE_TODO', {
   access(action, meta, creator) {
-    console.log(action);
     return true;
   },
   process(action) {
@@ -102,14 +96,12 @@ app.type('DELETE_TODO', {
         if (err) {
           return console.log(err);
         }
-        console.log(result.ops);
       });
   }
 });
 
 app.type('COMPLETE_TODO', {
   access(action, meta, creator) {
-    console.log(action);
     return true;
   },
   process(action) {
@@ -122,7 +114,6 @@ app.type('COMPLETE_TODO', {
           if (err) {
             return console.log(err);
           }
-          console.log(result.ops);
         }
       );
   }
@@ -130,12 +121,10 @@ app.type('COMPLETE_TODO', {
 
 app.type('COMPLETE_ALL_TODOS', {
   access(action, meta, creator) {
-    console.log(action);
     return true;
   },
   process(action) {
     let areAllMarked;
-    console.log(areAllMarked);
     db.get()
       .collection('todos')
       .find()
@@ -161,7 +150,6 @@ app.type('COMPLETE_ALL_TODOS', {
 
 app.type('CLEAR_COMPLETED', {
   access(action, meta, creator) {
-    console.log(action);
     return true;
   },
   process(action) {
@@ -171,7 +159,6 @@ app.type('CLEAR_COMPLETED', {
         if (err) {
           return console.log(err);
         }
-        console.log(result.ops);
       });
   }
 });
