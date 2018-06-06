@@ -29,6 +29,7 @@ app.auth((userId, token) => {
 app.log.on('preadd', (action, meta) => {
   if (action.type === 'ADD_TODO') meta.reasons.push('newTodo');
 
+  if (action.type === 'EDIT_TODO_TITLE') meta.reasons.push('editTodoTitle');
   if (action.type === 'DELETE_TODO') meta.reasons.push('deleteTodo');
 
   if (action.type === 'COMPLETE_TODO') meta.reasons.push('completeTodo');
@@ -57,6 +58,17 @@ app.type('ADD_TODO', {
   }
 });
 
+app.type('EDIT_TODO_TITLE', {
+  access(action, meta, creator) {
+    console.log(action);
+    return true;
+  },
+  process(action) {
+    db.get()
+      .collection('todos')
+      .updateOne({ todoId: action.todoId }, { $set: { title: action.title } });
+  }
+});
 app.type('DELETE_TODO', {
   access(action, meta, creator) {
     console.log(action);
