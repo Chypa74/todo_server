@@ -1,0 +1,27 @@
+{
+  "name": "todo_server",
+  "version": "1.0.0",
+  "description":
+    "Bachelor's project. Creation of a client-server web application on the technologies of the react and nodejs. And also use logux",
+  "main": "index.js",
+  "repository": "https://Chypa74@github.com/Chypa74/todo_server.git",
+  "author": "Dmitry Shuvalov <mitiashuv74@mail.ru>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "eslint-config-react-app": "^2.1.0",
+    "logux-core": "^0.2.2",
+    "logux-server": "^0.2.7",
+    "mongodb": "^3.1.0-beta4"
+  },
+  "scripts": {
+    "start": "nodemon ./server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  },
+  "eslintConfig": {
+    "extends": ["react-app"]
+  }
+}
