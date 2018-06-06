@@ -36,6 +36,9 @@ app.log.on('preadd', (action, meta) => {
   if (action.type === 'DELETE_TODO') meta.reasons.push('deleteTodo');
 
   if (action.type === 'COMPLETE_TODO') meta.reasons.push('completeTodo');
+
+  if (action.type === 'COMPLETE_ALL_TODOS')
+    meta.reasons.push('completeAllTodos');
 });
 
 app.type('ADD_TODO', {
@@ -123,9 +126,33 @@ app.type('COMPLETE_TODO', {
   }
 });
 
-app.log.on('add', (action, meta) => {});
+app.type('COMPLETE_ALL_TODOS', {
+  access(action, meta, creator) {
+    console.log(action);
+    return true;
+  },
+  process(action) {
+    let areAllMarked;
+    console.log(areAllMarked);
+    db.get()
+      .collection('todos')
+      .find()
+      .toArray(function(err, docs) {
+        if (err) {
+          return console.log(err);
+        }
+        areAllMarked = docs.every(todo => todo.completed);
 
-// app.log.on('clean', (action, meta) => {
-//   console.log('Action was cleaned: ', action, meta.id);
-//   console.log(app.log);
-// });
+        db.get()
+          .collection('todos')
+          .updateMany({}, { $set: { completed: !areAllMarked } }, function(
+            err,
+            result
+          ) {
+            if (err) {
+              return console.log(err);
+            }
+          });
+      });
+  }
+});
