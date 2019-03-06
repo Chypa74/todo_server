@@ -10,15 +10,19 @@ exports.connect = function(url, done) {
     return done();
   }
 
-  MongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
-    if (err) {
-      return done(err);
-    }
-    const dbName = 'TodoApp';
+  MongoClient.connect(
+    url,
+    { useNewUrlParser: true },
+    function(err, client) {
+      if (err) {
+        return done(err);
+      }
+      const dbName = 'TodoApp';
 
-    state.db = client.db(dbName);
-    done();
-  });
+      state.db = client.db(dbName);
+      done();
+    }
+  );
 };
 
 exports.get = function() {
